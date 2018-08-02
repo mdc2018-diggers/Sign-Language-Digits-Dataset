@@ -59,5 +59,5 @@ def predict():
 def running():
     return 'Flask is running!'
 
-if __name__ == '__sld_app__':
+if __name__ == '__main__':
   app.run()
