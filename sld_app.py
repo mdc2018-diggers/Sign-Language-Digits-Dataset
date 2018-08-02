@@ -54,3 +54,10 @@ def predict():
         }
     }
     return jsonify(response)
+
+@app.route('/flask')
+def running():
+    return 'Flask is running!'
+
+if __name__ == '__sld_app__':
+  app.run()
