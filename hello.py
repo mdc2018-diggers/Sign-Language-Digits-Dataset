@@ -1,7 +1,4 @@
 import keras
-from keras import backend as K
-from keras.models import Sequential, load_model
-from keras.preprocessing.image import ImageDataGenerator, img_to_array
 from flask import request
 from flask import jsonify
 from flask import Flask
