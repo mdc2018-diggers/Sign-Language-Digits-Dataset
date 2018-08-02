@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Language Digits App</title>
+    <style>
+        * {
+            font-size:30px;
+        }
+    </style>
+</head>
+<body>
+    <input id="image-selector" type="file">
+    <button id="predict-button">Predict</button>
+    <p style="font-weight:bold">Predictions</p>
+    <p>0: <span id="digit_0-prediction"></span></p>
+    <p>1: <span id="digit_1-prediction"></span></p>
+    <p>2: <span id="digit_2-prediction"></span></p>
+    <p>3: <span id="digit_3-prediction"></span></p>
+    <p>4: <span id="digit_4-prediction"></span></p>
+    <p>5: <span id="digit_5-prediction"></span></p>
+    <p>6: <span id="digit_6-prediction"></span></p>
+    <p>7: <span id="digit_7-prediction"></span></p>
+    <p>8: <span id="digit_8-prediction"></span></p>
+    <p>9: <span id="digit_9-prediction"></span></p>
+    <img id="selected-image" src="" />
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $("#image-selector").change(function(){
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let dataURL = reader.result;
+                $("#selected-image").attr("src", dataURL).attr("width", 224);
+                base64Image = dataURL.replace(/^data[:]image[/].+;base64,/, "");
+            }
+            reader.readAsDataURL($("#image-selector")[0].files[0]);
+            $("#digit_0-prediction").text("");
+            $("#digit_1-prediction").text("");
+            $("#digit_2-prediction").text("");
+            $("#digit_3-prediction").text("");
+            $("#digit_4-prediction").text("");
+            $("#digit_5-prediction").text("");
+            $("#digit_6-prediction").text("");
+            $("#digit_7-prediction").text("");
+            $("#digit_8-prediction").text("");
+            $("#digit_9-prediction").text("");
+        });
+        
+        $("#predict-button").click(function(event){
+            let message = {
+                image: base64Image
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/sld',
+                data: JSON.stringify(message),
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(response){
+                    $("#digit_0-prediction").text(response.prediction.digit_0.toFixed(6));
+                    $("#digit_1-prediction").text(response.prediction.digit_1.toFixed(6));
+                    $("#digit_2-prediction").text(response.prediction.digit_2.toFixed(6));
+                    $("#digit_3-prediction").text(response.prediction.digit_3.toFixed(6));
+                    $("#digit_4-prediction").text(response.prediction.digit_4.toFixed(6));
+                    $("#digit_5-prediction").text(response.prediction.digit_5.toFixed(6));
+                    $("#digit_6-prediction").text(response.prediction.digit_6.toFixed(6));
+                    $("#digit_7-prediction").text(response.prediction.digit_7.toFixed(6));
+                    $("#digit_8-prediction").text(response.prediction.digit_8.toFixed(6));
+                    $("#digit_9-prediction").text(response.prediction.digit_9.toFixed(6));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
