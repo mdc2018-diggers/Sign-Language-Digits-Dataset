@@ -56,7 +56,7 @@ def predict():
     }
     return jsonify(response)
 
-@app.route('/flask')
+@app.route('/')
 def running():
     return 'Flask is running!'
 
