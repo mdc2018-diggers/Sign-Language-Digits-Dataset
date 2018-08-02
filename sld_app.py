@@ -12,6 +12,7 @@ from flask import Flask
 import tensorflow as tf
 
 app = Flask(__name__)
+app.debug = True
 
 def get_model():
     global model, graph
