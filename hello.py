@@ -1,4 +1,3 @@
-import keras
 from flask import request
 from flask import jsonify
 from flask import Flask
