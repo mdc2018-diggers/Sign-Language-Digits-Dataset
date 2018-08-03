@@ -58,7 +58,7 @@ def predict():
 
 @app.route('/')
 def running():
-    return 'Flask is running!'
+    return 'Flask is running!!!!'
 
 if __name__ == '__main__':
   app.run()
