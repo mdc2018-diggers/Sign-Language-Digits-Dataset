@@ -41,16 +41,16 @@ def predict():
         prediction = model.predict(processed_image).tolist()
     response = {
         'prediction': {
-            'digit_0': prediction[0][0],
-            'digit_1': prediction[0][1],
-            'digit_2': prediction[0][2],
-            'digit_3': prediction[0][3],
-            'digit_4': prediction[0][4],
-            'digit_5': prediction[0][5],
-            'digit_6': prediction[0][6],
-            'digit_7': prediction[0][7],
-            'digit_8': prediction[0][8],
-            'digit_9': prediction[0][9]
+            '0': prediction[0][0],
+            '1': prediction[0][1],
+            '2': prediction[0][2],
+            '3': prediction[0][3],
+            '4': prediction[0][4],
+            '5': prediction[0][5],
+            '6': prediction[0][6],
+            '7': prediction[0][7],
+            '8': prediction[0][8],
+            '9': prediction[0][9]
         }
     }
     return jsonify(response)
