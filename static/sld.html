@@ -42,7 +42,7 @@
                     span_pred.text("").show();
                     span_pred.append($("<p></p>").css("font-weight","bold").text("Predictions"));
                     for(i = 0; i < 10; i++) {
-                        pred_value = response.prediction[`${i}`].toFixed(6); 
+                        pred_value = response.prediction[`${i}`].toFixed(2); 
                         if(pred_value > 0) {
                             span_pred.append($("<p></p>").text(i + ": " + pred_value));
                         }
