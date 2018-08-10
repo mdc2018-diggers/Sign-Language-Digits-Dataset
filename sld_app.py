@@ -30,7 +30,6 @@ def preprocess_image(image, target_size):
         image = image.convert("L")
     image = image.resize(target_size)
     image = img_to_array(image)
-    image = np.expand_dims(image, axis=0)
     return image
 
 def get_label(index):
@@ -48,12 +47,20 @@ def predict():
     with graph.as_default(): 
         image = Image.open(io.BytesIO(decoded))
         processed_image = preprocess_image(image, target_size=(128, 128))
+
+        # TODO: ver erro
+        # pil_img = Image.fromarray(processed_image)
+        # buff = io.BytesIO()
+        # pil_img.save(buff, format="PNG")
+        # image_b64 = base64.b64encode(buff.getvalue()).decode("utf-8")
+
+        processed_image = np.expand_dims(processed_image, axis=0)
         processed_image = preprocess_input(processed_image)
         prediction = model.predict(processed_image).tolist()
     result = {}
     for i in range(0,10):
         result[get_label(i)] = prediction[0][i]
-    response = { 'prediction': result }
+    response = { 'prediction': result, 'processedImage': 'data:image/png;base64,' + encoded }
     return jsonify(response)
 
 @app.route('/')
