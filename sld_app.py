@@ -50,20 +50,10 @@ def predict():
         processed_image = preprocess_image(image, target_size=(128, 128))
         processed_image = preprocess_input(processed_image)
         prediction = model.predict(processed_image).tolist()
-    response = {
-        'prediction': {
-            '0': prediction[0][get_label(0)],
-            '1': prediction[0][get_label(1)],
-            '2': prediction[0][get_label(2)],
-            '3': prediction[0][get_label(3)],  
-            '4': prediction[0][get_label(4)],
-            '5': prediction[0][get_label(5)],
-            '6': prediction[0][get_label(6)],
-            '7': prediction[0][get_label(7)],
-            '8': prediction[0][get_label(8)],
-            '9': prediction[0][get_label(9)]
-        }
-    }
+    result = {}
+    for i in range(0,10):
+        result[get_label(i)] = prediction[0][i]
+    response = { 'prediction': result }
     return jsonify(response)
 
 @app.route('/')
