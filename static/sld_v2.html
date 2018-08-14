@@ -42,7 +42,21 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
         <p class="lead">This is a simple PoC, that show predictions info about inputted image.</p>
       </div>
     </div>
-    <div id="main" class="container clear-top">
+    <div id="main" class="container-fluid clear-top">
+      <div class="row">
+        <div class="col d-lg-none">
+          <div id="examples-image-accordion" class="card border-secondary mb-3 shadow-sm accordion">
+            <div id="examples-image-header" class="card-header">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#examples-image-div" aria-expanded="true" aria-controls="examples-image-div">
+                Examples Image
+              </button>
+            </div>
+            <div id="examples-image-div" class="collapse show" aria-labelledby="examples-image-header" data-parent="#examples-image-accordion">
+              <img id="sample-image" src="examples2.png" class="card-img-bottom" />
+            </div>
+          </div>  
+        </div>
+      </div>      
       <div class="row mt-3 mb-3">
         <div class="col-sm">
           <div class="input-group">
@@ -56,9 +70,21 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
           </div>
         </div>
       </div>
-      <div id="images-div" class="row" style="display: none;">
+      <div class="row">
+        <div class="col-lg d-none d-lg-block d-sm-none">
+          <div id="examples-image-accordion" class="card border-secondary mb-3 shadow-sm accordion">
+            <div id="examples-image-header" class="card-header">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#examples-image-div" aria-expanded="true" aria-controls="examples-image-div">
+                Examples Image
+              </button>
+            </div>
+            <div id="examples-image-div" class="collapse show" aria-labelledby="examples-image-header" data-parent="#examples-image-accordion">
+              <img id="sample-image" src="examples.png" class="card-img-bottom" />
+            </div>
+          </div>  
+        </div>
         <div class="col-lg">
-          <div id="selected-image-accordion" class="card border-secondary mb-3 shadow-sm accordion">
+          <div id="selected-image-accordion" class="card border-secondary mb-3 shadow-sm accordion" style="display: none;">
             <div id="selected-image-header" class="card-header">
               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#selected-image-div" aria-expanded="true" aria-controls="selected-image-div">
                 Selected Image
@@ -70,7 +96,7 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
           </div>
         </div>
         <div class="col-lg">
-          <div id="processed-image-accordion" class="card border-secondary mb-3 shadow-sm accordion">
+          <div id="processed-image-accordion" class="card border-secondary mb-3 shadow-sm accordion" style="display: none;">
             <div id="processed-image-header" class="card-header">
               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#processed-image-div" aria-expanded="true" aria-controls="processed-image-div">
                 Processed Image
@@ -144,7 +170,7 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
       let base64Image;
       const imageLabel = $("#image-label");
       
-      const imagesDiv = $("#images-div");
+      const imagesDiv = [$("#selected-image-accordion"), $('#processed-image-accordion')];
       const selectedImage = $("#selected-image");
       const selectedImageDiv = $("#selected-image-div");
       const processedImage = $("#processed-image");
@@ -173,7 +199,7 @@ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
         rowChartDiv.empty();
         pieChartDiv.empty();
         chartsDiv.hide();
-        imagesDiv.show();
+        imagesDiv.forEach((it) => it.show());
         selectedImageDiv.collapse('show');
       });
 
