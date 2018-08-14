@@ -29,8 +29,10 @@ def preprocess_image(image, target_size):
     if image.mode != "L":
         image = image.convert("L")
     image = image.resize(target_size)
-    image = img_to_array(image)
-    return image
+    image_arr = img_to_array(image)
+    image_arr = np.expand_dims(image_arr, axis=0)
+    image_arr = preprocess_input(image_arr)
+    return image_arr, image
 
 def get_label(index):
     correct_label = [9, 0, 7, 6, 1, 8, 4, 3, 2, 5]
@@ -46,21 +48,15 @@ def predict():
     decoded = base64.b64decode(encoded)
     with graph.as_default(): 
         image = Image.open(io.BytesIO(decoded))
-        processed_image = preprocess_image(image, target_size=(128, 128))
-
-        # TODO: ver erro
-        # pil_img = Image.fromarray(processed_image)
-        # buff = io.BytesIO()
-        # pil_img.save(buff, format="PNG")
-        # image_b64 = base64.b64encode(buff.getvalue()).decode("utf-8")
-
-        processed_image = np.expand_dims(processed_image, axis=0)
-        processed_image = preprocess_input(processed_image)
+        processed_image, gray_resized_image = preprocess_image(image, target_size=(128, 128))        
         prediction = model.predict(processed_image).tolist()
+        buff = io.BytesIO()
+        gray_resized_image.save(buff, format="PNG")
+        image_b64 = base64.b64encode(buff.getvalue()).decode("utf-8")
     result = {}
     for i in range(0,10):
         result[get_label(i)] = prediction[0][i]
-    response = { 'prediction': result, 'processedImage': 'data:image/png;base64,' + encoded }
+    response = { 'prediction': result, 'processedImage': 'data:image/png;base64,' + image_b64 }
     return jsonify(response)
 
 @app.route('/')
